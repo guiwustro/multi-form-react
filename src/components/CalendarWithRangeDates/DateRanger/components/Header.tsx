@@ -1,0 +1,149 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
+import {
+	FormControl,
+	Grid,
+	IconButton,
+	MenuItem,
+	Select,
+	SelectChangeEvent,
+} from "@mui/material";
+import React from "react";
+import ChevronLeft from "@mui/icons-material/ChevronLeft";
+import ChevronRight from "@mui/icons-material/ChevronRight";
+import { addYears, getMonth, getYear, setMonth, setYear } from "date-fns";
+
+interface HeaderProps {
+	date: Date;
+	// eslint-disable-next-line no-unused-vars
+	setDate: (date: Date) => void;
+	nextDisabled: boolean;
+	prevDisabled: boolean;
+	onClickNext: () => void;
+	onClickPrevious: () => void;
+	locale?: Locale;
+}
+
+const generateYears = (startsAtYear: number, endsAtYear: number) => {
+	const years = [];
+	const numberOfYears = endsAtYear - startsAtYear + 1;
+	let actualYear = startsAtYear;
+	for (let i = 0; i < numberOfYears; i++) {
+		years.push(actualYear);
+		actualYear += 1;
+	}
+	return years;
+};
+
+const Header: React.FunctionComponent<HeaderProps> = ({
+	date,
+	setDate,
+	nextDisabled,
+	prevDisabled,
+	onClickNext,
+	onClickPrevious,
+	locale,
+}: HeaderProps) => {
+	const MONTHS =
+		typeof locale !== "undefined"
+			? [...Array(12).keys()].map((d) =>
+					locale.localize?.month(d, {
+						width: "abbreviated",
+						context: "standalone",
+					})
+			  )
+			: [
+					"Jan",
+					"Feb",
+					"Mar",
+					"Apr",
+					"May",
+					"June",
+					"July",
+					"Aug",
+					"Sept",
+					"Oct",
+					"Nov",
+					"Dec",
+			  ];
+
+	const handleMonthChange = (event: SelectChangeEvent<number>) => {
+		setDate(setMonth(date, parseInt(event.target.value as string, 10)));
+	};
+
+	const handleYearChange = (event: SelectChangeEvent<number>) => {
+		setDate(setYear(date, parseInt(event.target.value as string, 10)));
+	};
+
+	const currentDate = new Date();
+	const nextTwoYears = addYears(currentDate, 2);
+
+	return (
+		<Grid container justifyContent="space-between" alignItems="center">
+			<Grid item sx={{ padding: "5px" }}>
+				<IconButton
+					sx={{
+						padding: "10px",
+						"&:hover": {
+							background: "none",
+						},
+					}}
+					disabled={prevDisabled}
+					onClick={onClickPrevious}
+					// size="large"
+				>
+					<ChevronLeft color={prevDisabled ? "disabled" : "action"} />
+				</IconButton>
+			</Grid>
+			<Grid item>
+				<FormControl variant="standard">
+					<Select
+						value={getMonth(date)}
+						onChange={handleMonthChange}
+						MenuProps={{ disablePortal: true }}
+					>
+						{MONTHS.map((month, idx) => (
+							<MenuItem key={month} value={idx}>
+								{month}
+							</MenuItem>
+						))}
+					</Select>
+				</FormControl>
+			</Grid>
+
+			<Grid item>
+				<FormControl variant="standard">
+					<Select
+						value={getYear(date)}
+						onChange={handleYearChange}
+						MenuProps={{ disablePortal: true }}
+					>
+						{generateYears(2019, nextTwoYears.getFullYear()).map((year) => (
+							<MenuItem key={year} value={year}>
+								{year}
+							</MenuItem>
+						))}
+					</Select>
+				</FormControl>
+
+				{/* <Typography>{format(date, "MMMM YYYY")}</Typography> */}
+			</Grid>
+			<Grid item sx={{ padding: "5px" }}>
+				<IconButton
+					sx={{
+						padding: "10px",
+						"&:hover": {
+							background: "none",
+						},
+					}}
+					disabled={nextDisabled}
+					onClick={onClickNext}
+					// size="large"
+				>
+					<ChevronRight color={nextDisabled ? "disabled" : "action"} />
+				</IconButton>
+			</Grid>
+		</Grid>
+	);
+};
+
+export default Header;
