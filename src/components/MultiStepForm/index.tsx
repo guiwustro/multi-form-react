@@ -5,6 +5,7 @@ import {
 	Box,
 	Button,
 	FormControl,
+	FormHelperText,
 	InputAdornment,
 	InputLabel,
 	MenuItem,
@@ -52,7 +53,11 @@ const MultiStepForm = ({ handleNext }: IMultiStepFormProps) => {
 		data: yup.array().of(
 			yup.object().shape({
 				valueType: yup.string().required("required field"),
-				amount: yup.number().required("required field").positive(),
+				amount: yup
+					.number()
+					.typeError("Required field")
+					.required("required field")
+					.positive("Must be a positive number"),
 				interval: yup.array().of(
 					yup.object().shape({
 						startDate: yup.string().required("required field"),
@@ -135,6 +140,9 @@ const MultiStepForm = ({ handleNext }: IMultiStepFormProps) => {
 									<MenuItem value="fixed">Fixed</MenuItem>
 									<MenuItem value="percentage">Percentage</MenuItem>
 								</Select>
+								{!!errors?.data?.[index]?.valueType && (
+									<FormHelperText error>Required field</FormHelperText>
+								)}
 							</FormControl>
 							<NumberInput
 								InputLabelProps={{ style: { zIndex: 0 } }}
@@ -150,6 +158,10 @@ const MultiStepForm = ({ handleNext }: IMultiStepFormProps) => {
 									),
 								}}
 								error={!!errors?.data?.[index]?.amount}
+								helperText={
+									!!errors?.data?.[index]?.amount &&
+									errors?.data?.[index]?.amount?.message
+								}
 								{...register(`data.${index}.amount`)}
 							/>
 						</DateContainer>

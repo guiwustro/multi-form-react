@@ -127,6 +127,7 @@ export const NestedArray = ({
 									}}
 									label="Start Date"
 									error={!!errors?.[k]?.startDate}
+									helperText={!!errors?.[k]?.startDate && "Required field"}
 									style={{ cursor: "pointer" }}
 									InputLabelProps={{ style: { zIndex: 0 } }}
 									InputProps={{
@@ -145,6 +146,7 @@ export const NestedArray = ({
 									}}
 									label="End Date"
 									error={!!errors?.[k]?.endDate}
+									helperText={!!errors?.[k]?.endDate && "Required field"}
 									InputLabelProps={{ style: { zIndex: 0 } }}
 									InputProps={{
 										startAdornment: (

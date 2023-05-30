@@ -17,10 +17,16 @@ const Summary = () => {
 			<Paper sx={{ maxWidth: "600px" }}>
 				<Table>
 					<TableHead>
-						<TableRow>
-							<TableCell align="center">Intervals</TableCell>
-							<TableCell align="center">Amount</TableCell>
-							<TableCell align="center">Value Type</TableCell>
+						<TableRow sx={{ background: "#dfdfdf" }}>
+							<TableCell sx={{ fontWeight: "bold" }} align="center">
+								Intervals
+							</TableCell>
+							<TableCell sx={{ fontWeight: "bold" }} align="center">
+								Amount
+							</TableCell>
+							<TableCell sx={{ fontWeight: "bold" }} align="center">
+								Value Type
+							</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>

@@ -1,7 +1,6 @@
+import { Button, Paper, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import MultiStep from "../../components/MultiStep";
 import { Container } from "./styles";
-import { Box, Button, Paper, Typography } from "@mui/material";
 
 const SuccessForm = () => {
 	return (
