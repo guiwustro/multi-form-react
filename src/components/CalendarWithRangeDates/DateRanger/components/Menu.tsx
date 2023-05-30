@@ -73,7 +73,7 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
 		helpers,
 		handlers,
 	};
-	const width = isMobile ? "320px" : "auto";
+	const width = isMobile ? "290px" : "auto";
 	return (
 		<Paper
 			elevation={5}

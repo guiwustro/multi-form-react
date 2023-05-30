@@ -16,6 +16,7 @@ import {
 } from "react-hook-form";
 import CalendarWithRangeDates from "../CalendarWithRangeDates";
 import { DateRange } from "../CalendarWithRangeDates/DateRanger";
+import { DateContainer } from "./styles";
 
 interface INestedFieldArray {
 	nestIndex: number;
@@ -117,41 +118,43 @@ export const NestedArray = ({
 
 				return (
 					<div key={item.id}>
-						<Box sx={{ display: "flex", gap: 2 }}>
-							<TextField
-								{...register(`data[${nestIndex}].interval[${k}].startDate`)}
-								onClick={() => {
-									setActualCalendar(k);
-								}}
-								label="Start Date"
-								error={!!errors?.[k]?.startDate}
-								style={{ cursor: "pointer" }}
-								InputLabelProps={{ style: { zIndex: 0 } }}
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position="start">
-											<DateRangeOutlined style={{ width: 16 }} />
-										</InputAdornment>
-									),
-									readOnly: true,
-								}}
-							/>
-							<TextField
-								{...register(`data[${nestIndex}].interval[${k}].endDate`)}
-								onClick={() => {
-									setActualCalendar(k);
-								}}
-								label="End Date"
-								error={!!errors?.[k]?.endDate}
-								InputLabelProps={{ style: { zIndex: 0 } }}
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position="start">
-											<DateRangeOutlined style={{ width: 16 }} />
-										</InputAdornment>
-									),
-								}}
-							/>
+						<Box sx={{ display: "flex", marginBottom: 1 }}>
+							<DateContainer>
+								<TextField
+									{...register(`data[${nestIndex}].interval[${k}].startDate`)}
+									onClick={() => {
+										setActualCalendar(k);
+									}}
+									label="Start Date"
+									error={!!errors?.[k]?.startDate}
+									style={{ cursor: "pointer" }}
+									InputLabelProps={{ style: { zIndex: 0 } }}
+									InputProps={{
+										startAdornment: (
+											<InputAdornment position="start">
+												<DateRangeOutlined style={{ width: 16 }} />
+											</InputAdornment>
+										),
+										readOnly: true,
+									}}
+								/>
+								<TextField
+									{...register(`data[${nestIndex}].interval[${k}].endDate`)}
+									onClick={() => {
+										setActualCalendar(k);
+									}}
+									label="End Date"
+									error={!!errors?.[k]?.endDate}
+									InputLabelProps={{ style: { zIndex: 0 } }}
+									InputProps={{
+										startAdornment: (
+											<InputAdornment position="start">
+												<DateRangeOutlined style={{ width: 16 }} />
+											</InputAdornment>
+										),
+									}}
+								/>
+							</DateContainer>
 							<Box sx={{ alignItems: "center", display: "flex" }}>
 								{fields.length > 1 ? (
 									<IconButton
@@ -160,7 +163,7 @@ export const NestedArray = ({
 										size="small"
 										onClick={() => remove(k)}
 									>
-										<DeleteIcon fontSize="small" />
+										<DeleteIcon fontSize="medium" />
 									</IconButton>
 								) : (
 									<Box sx={{ marginRight: "30px" }}></Box>

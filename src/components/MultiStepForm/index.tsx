@@ -19,6 +19,7 @@ import { NestedArray } from "./NestedFieldArray";
 import {
 	AddButton,
 	ButtonContainer,
+	DateContainer,
 	FieldsContainer,
 	FormContainer,
 	IntervalContainer,
@@ -113,7 +114,7 @@ const MultiStepForm = ({ handleNext }: IMultiStepFormProps) => {
 								{...{ control, register }}
 							/>
 						</Box>
-						<Box sx={{ display: "flex", gap: 2, marginRight: "42px" }}>
+						<DateContainer>
 							<FormControl sx={{ my: 1, width: "100%", zIndex: 0 }}>
 								<InputLabel
 									sx={{ background: "white" }}
@@ -151,7 +152,7 @@ const MultiStepForm = ({ handleNext }: IMultiStepFormProps) => {
 								error={!!errors?.data?.[index]?.amount}
 								{...register(`data.${index}.amount`)}
 							/>
-						</Box>
+						</DateContainer>
 						{fields.length > 1 && (
 							<Box
 								sx={{
